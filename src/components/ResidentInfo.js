@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 //axios
 import axios from "axios";
 
-const ResidentInfo = ({ url, setLoader }) => {
+const ResidentInfo = ({ url }) => {
   //State
   const [characterInfo, setCharacterInfo] = useState(null);
 
@@ -16,21 +16,19 @@ const ResidentInfo = ({ url, setLoader }) => {
 
   //Effect
   useEffect(() => {
-    setLoader(true);
+    setCharacterInfo(null);
 
     const handleFetchData = async () => {
       try {
         const { data } = await axios.get(url);
         setCharacterInfo(data);
-      } catch (error) {
-        console.log(error.response);
-      } finally {
-        setLoader(false);
+      } catch ({ response }) {
+        console.log(response);
       }
     };
 
     handleFetchData();
-  }, [url, setLoader]);
+  }, [url]);
 
   return (
     <>

@@ -16,7 +16,7 @@ const Loader = ({ position, top }) => {
     <div
       style={styles}
       className={`flex
-      justify-center ${top ? "items-start" : "items-center"} h-full`}
+      justify-center ${top ? "items-start" : "items-center"} `}
     >
       <img
         className={`logo ${top ? "w-1/2" : "w-auto"}`}

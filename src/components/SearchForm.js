@@ -36,7 +36,7 @@ const SearchForm = ({ locationList, inputSearchRef, handleSearchLocation }) => {
         />
 
         <div
-          className="absolute bottom-0 border w-full select-search hidden max-h-72 overflow-y-visible"
+          className="absolute bottom-0 border w-full select-search hidden max-h-72 overflow-y-visible z-10"
           ref={inputSearchRef}
         >
           {search.length >= 2
@@ -44,7 +44,7 @@ const SearchForm = ({ locationList, inputSearchRef, handleSearchLocation }) => {
                 planeta.toLowerCase().includes(search.toLowerCase()) ? (
                   <option
                     className="cursor-pointer p-3 border-b border-gray-600"
-                    onClick={(e) => {
+                    onClick={() => {
                       setSearch(planeta);
                       inputSearchRef.current.classList.add("hidden");
                     }}

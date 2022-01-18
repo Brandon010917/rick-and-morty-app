@@ -16,10 +16,14 @@ const ContainerBox = () => {
   const [residentsList, setResidentsList] = useState(null);
   const [searchLocation, setSearchLocation] = useState("");
   const [loader, setLoader] = useState(false);
+  const [error, setError] = useState(null);
 
   //Effect
   useEffect(() => {
     setLoader(true);
+    setResidentsList(null);
+    setLocationInfo(null);
+    setError(null);
 
     const handleFetchData = async () => {
       let url = "https://rickandmortyapi.com/api/location/";
@@ -36,8 +40,14 @@ const ContainerBox = () => {
           setLocationInfo(data);
           setResidentsList(data.residents);
         }
-      } catch (error) {
-        /*  console.log(error.response); */
+      } catch ({ response }) {
+        const error = {
+          status: response.status || 404,
+          statusText:
+            response.statusText ||
+            "An unexpected error occurred, please try again",
+        };
+        setError(error);
       } finally {
         setLoader(false);
       }
@@ -53,9 +63,7 @@ const ContainerBox = () => {
 
   return (
     <>
-      {loader && (
-        <Loader position="fixed" />
-      )}
+      {loader && <Loader position="fixed" />}
       <Header />
       <SearchBox handleSearchLocation={handleSearchLocation} />
       {locationInfo && (
@@ -66,7 +74,7 @@ const ContainerBox = () => {
           residents={locationInfo.residents.length}
         />
       )}
-      {residentsList?.length > 0 && <ResidentsList residents={residentsList} />}
+      <ResidentsList residents={residentsList} error={error} />
     </>
   );
 };
